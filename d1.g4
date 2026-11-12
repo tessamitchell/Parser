@@ -1,16 +1,20 @@
 grammar d1;
 
-start : ASSIGN
+start : assign
  EOF;
 
 
-ASSIGN : VARIABLE ' = ' EXPRESSION;
+assign : VARIABLE ASSIGN_OP EXPRESSION;
 
-ASSIGN_OP : '=' | '+=' | '-=' | '*=' | '/=' ;
+
+
+VARIABLE : [a-zA-Z]+[a-zA-Z0-9_]* ;
+
+ASSIGN_OP : ' = ' | ' += ' | ' -= ' | ' *= ' | '/=' ;
 
 EXPRESSION : STRING | INTEGER | VARIABLE | FLOAT ;
 
-VARIABLE : [a-zA-Z]+[a-zA-Z0-9_]* ;
+
 
 STRING : '"'TEXT'"' ;
 TEXT : [ -~];
