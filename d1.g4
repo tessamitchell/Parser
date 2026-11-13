@@ -24,3 +24,4 @@ ARRAY : '['  ']' ;
 BOOLEAN : 'True' | 'False' ;
 
 NEWLINE : '\r' '\n' ;
+WS : [ \t]+ -> skip ;
