@@ -1,40 +1,36 @@
 grammar d1;
 
-start : assign+
- EOF;
+start : assign+ EOF;
 
 
-assign : VARIABLE ASSIGN_OP EXPRESSION NEWLINE;
+assign : VARIABLE ASSIGN_OP expression NEWLINE;
 
+expression : array 
+            | data (OPERATOR data)?
+            | data ;
 
-
-
-VARIABLE : [a-zA-Z]+[a-zA-Z0-9_]* ; // currently prevents boolean from being read, changing start to [a-z]+ fixes this, but not perfect
+array : '[' (data', ')* data ']' ;
+data : BOOLEAN | VARIABLE | STRING | INTEGER | FLOAT  ;
 
 ASSIGN_OP : ' = ' 
         | ' += ' 
         | ' -= ' 
         | ' *= ' 
         | ' /= ' ;
-
-EXPRESSION :
-             ARRAY 
-            | DATA OPERATOR DATA
-            | DATA ;
-
-DATA : BOOLEAN | VARIABLE | STRING | INTEGER | FLOAT  ;
-
+        
 OPERATOR :    ' + ' | '+'
             | ' - ' | '-'
             | ' / ' | '/'
             | ' * ' | '*'
             | ' % ' | '%';
 
+
+BOOLEAN : 'True' | 'False' ;
+VARIABLE : [a-zA-Z]+[a-zA-Z0-9_]* ;
+
 STRING : '"'.*?'"' | '\'' .*? '\'';
 INTEGER : [0-9]+;
 FLOAT : [0-9]+ '.' [0-9]+ ;
-ARRAY : '[' (DATA', ')* DATA ']' ;
-BOOLEAN : 'True' | 'False' ;
 
 NEWLINE : '\r'? '\n'+ ;
 WS : [ \t]+ -> skip ;
