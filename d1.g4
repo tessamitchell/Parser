@@ -6,23 +6,29 @@ start : (assign | NEWLINE)+ EOF;
 assign : VARIABLE ASSIGN_OP expression ;
 
 expression : array 
+            | data
             | data OPERATOR data
-            | data ;
+            | data OPERATOR data OPERATOR data ;
 
-array : '[' (data', ')* data ']' ;
-data : BOOLEAN | VARIABLE | STRING | INTEGER | FLOAT  ;
+array : '['(data ',')* data']';
 
-ASSIGN_OP : ' = ' 
-        | ' += ' 
-        | ' -= ' 
-        | ' *= ' 
-        | ' /= ' ;
+data : BOOLEAN 
+            | VARIABLE 
+            | STRING 
+            | INTEGER 
+            | FLOAT  ;
+
+ASSIGN_OP : '=' 
+            | '+=' 
+            | '-=' 
+            | '*=' 
+            | '/=' ;
         
-OPERATOR :    ' + ' | '+'
-            | ' - ' | '-'
-            | ' / ' | '/'
-            | ' * ' | '*'
-            | ' % ' | '%';
+OPERATOR : '%' 
+            | '*' 
+            | '/' 
+            | '+' 
+            | '-' ;
 
 
 BOOLEAN : 'True' | 'False' ;
