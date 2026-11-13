@@ -1,12 +1,12 @@
 grammar d1;
 
-start : assign+ EOF;
+start : (assign | NEWLINE)+ EOF;
 
 
-assign : VARIABLE ASSIGN_OP expression NEWLINE;
+assign : VARIABLE ASSIGN_OP expression ;
 
 expression : array 
-            | data (OPERATOR data)?
+            | data OPERATOR data
             | data ;
 
 array : '[' (data', ')* data ']' ;
