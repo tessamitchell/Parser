@@ -1,10 +1,10 @@
 grammar d1;
 
-start : assign
+start : assign+
  EOF;
 
 
-assign : VARIABLE ASSIGN_OP EXPRESSION;
+assign : VARIABLE ASSIGN_OP EXPRESSION NEWLINE;
 
 
 
@@ -16,7 +16,11 @@ EXPRESSION : STRING | INTEGER | VARIABLE | FLOAT ;
 
 
 
-STRING : '"'TEXT'"' ;
+STRING : '"'TEXT'"' | '\''TEXT'\'';
 TEXT : [ -~];
 INTEGER : [0-9]+;
 FLOAT : [0-9]+ '.' [0-9]+ ;
+ARRAY : '['  ']' ;
+BOOLEAN : 'True' | 'False' ;
+
+NEWLINE : '\r' '\n' ;
