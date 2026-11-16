@@ -13,12 +13,12 @@ array : '[' (data',')* data ']' ;
 data : BOOLEAN | VARIABLE | STRING | INTEGER | FLOAT  ;
 
 
-if : 'if' condition ':\r\n\t' assign+ 
-    ('\nelif' condition ':\r\n\t' assign+)*
-    ('else:\r\n\t' assign+)?;
+if : 'if' condition ':\n' assign+ 
+    ('\nelif' condition ':\n' assign+)*
+    ('\nelse' ':\n' assign+)*;
 
-condition : data 
-        ((CONDITIONAL_OP | LOGIC) data)*;
+condition : (data 
+        ((CONDITIONAL_OP | LOGIC) data)* | ('('(LOGIC data)*')') | LOGIC)*;
 
 ASSIGN_OP : '=' 
         | '+=' 
