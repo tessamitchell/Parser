@@ -1,6 +1,6 @@
 grammar d1;
 
-start : (assign | if | NEWLINE)+ EOF;
+start : (assign | ifStatement | NEWLINE)+ EOF;
 
 
 assign : VARIABLE ASSIGN_OP expression ;
@@ -13,9 +13,9 @@ array : '[' (data',')* data ']' ;
 data : BOOLEAN | VARIABLE | STRING | INTEGER | FLOAT  ;
 
 
-if : 'if' condition ':\n' assign+ 
-    ('\nelif' condition ':\n' assign+)*
-    ('\nelse' ':\n' assign+)?;
+ifStatement : 'if' condition ':' NEWLINE (INDENT assign (NEWLINE? | EOF))+ 
+    ('elif' condition ':' NEWLINE (INDENT assign (NEWLINE? | EOF))+)*
+    ('else' ':' NEWLINE (INDENT assign (NEWLINE? | EOF))+)?;
 
 condition : (data 
         ((CONDITIONAL_OP | LOGIC) data)* | ('('(LOGIC data)*')') | LOGIC)*;
@@ -47,5 +47,6 @@ STRING : '"'.*?'"' | '\'' .*? '\'';
 INTEGER : '-'?[0-9]+;
 FLOAT : '-'?[0-9]+ '.' [0-9]+ ;
 
-NEWLINE : '\r'? '\n'+ ;
+NEWLINE : ('\r'? '\n')+ ;
+INDENT : '\t' | '   ' ;
 WS : [ \t]+ -> skip ;
